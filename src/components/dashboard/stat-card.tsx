@@ -1,0 +1,6 @@
+import { ArrowDownRight, ArrowUpRight, type LucideIcon } from "lucide-react";
+import { cn } from "@/lib/utils";
+
+export function StatCard({ label, value, change, trend = "up", icon: Icon }: { label: string; value: string; change: string; trend?: "up" | "down" | "neutral"; icon: LucideIcon }) {
+  return <div className="group border border-stone-200 bg-[#fcfaf6] p-5 transition duration-300 hover:-translate-y-0.5 hover:border-stone-300 hover:shadow-[0_14px_35px_rgba(41,37,31,.07)] sm:p-6"><div className="flex items-center justify-between"><p className="text-[11px] font-semibold tracking-[0.09em] text-stone-600 uppercase">{label}</p><span className="grid size-9 place-items-center rounded-full bg-[#eee6da] text-[#81402f] transition group-hover:scale-105"><Icon className="size-4" /></span></div><p className="mt-6 text-3xl font-semibold tracking-[-0.045em] text-[#20221e] sm:text-[2rem]">{value}</p><p className={cn("mt-2 flex items-center gap-1 text-[11px] font-medium", trend === "down" ? "text-amber-700" : trend === "neutral" ? "text-stone-500" : "text-emerald-700")}>{trend === "up" ? <ArrowUpRight className="size-3.5" /> : trend === "down" ? <ArrowDownRight className="size-3.5" /> : null}{change}</p></div>;
+}

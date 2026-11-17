@@ -1,0 +1,31 @@
+@import "tailwindcss";
+
+@theme inline {
+  --font-sans: var(--font-manrope);
+  --font-serif: var(--font-newsreader);
+}
+
+@layer base {
+  * {
+    @apply border-stone-200;
+  }
+
+  html {
+    @apply scroll-smooth bg-[#f6f1e8];
+  }
+
+  body {
+    @apply bg-[#f6f1e8] text-[#211f1a] antialiased selection:bg-[#9f3f2a] selection:text-white;
+  }
+
+  button,
+  a {
+    cursor: pointer;
+    -webkit-tap-highlight-color: transparent;
+  }
+
+  button:disabled,
+  [aria-disabled="true"] {
+    cursor: not-allowed;
+  }
+}
