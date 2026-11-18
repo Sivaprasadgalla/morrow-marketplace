@@ -181,7 +181,7 @@ export function VendorOrders() {
             account.
           </p>
         </div>
-        <div className="flex items-center gap-3">
+        <div className="flex flex-wrap items-center gap-3">
           <ManualOrderCreate />
           <p className="inline-flex items-center gap-2 border border-stone-200 bg-[#fcfaf6] px-4 py-2 text-xs font-semibold">
             <PackageCheck className="size-4 text-[#5f6048]" /> {lineCount} order lines
@@ -191,7 +191,7 @@ export function VendorOrders() {
 
       {/* Filter toolbar */}
       <div className="mt-7 flex flex-wrap items-center gap-3 border border-stone-200 bg-[#fcfaf6] p-4">
-        <div className="relative min-w-[220px] max-w-sm flex-1">
+        <div className="relative w-full min-w-0 basis-full sm:max-w-sm sm:flex-1 sm:basis-[220px]">
           <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-stone-400" />
           <input
             type="text"
@@ -263,7 +263,7 @@ export function VendorOrders() {
                 </p>
               </div>
               {order.shippingAddress ? (
-                <address className="not-italic text-right text-[11px] leading-relaxed text-stone-500">
+                <address className="not-italic text-left sm:text-right text-[11px] leading-relaxed text-stone-500">
                   {order.shippingAddress.name} · {order.shippingAddress.phone}
                   <br />
                   {order.shippingAddress.line1}, {order.shippingAddress.city}
@@ -281,7 +281,7 @@ export function VendorOrders() {
                 return (
                   <div
                     key={item._id}
-                    className="grid gap-4 px-5 py-5 lg:grid-cols-[1.2fr_.8fr_.95fr_auto]"
+                    className="grid gap-4 px-5 py-5 xl:grid-cols-[minmax(0,1.2fr)_minmax(0,.8fr)_minmax(0,.95fr)_auto]"
                   >
                     <div>
                       <p className="font-semibold">{item.productName}</p>

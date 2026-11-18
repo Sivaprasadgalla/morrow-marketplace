@@ -8,7 +8,7 @@ export function TextReveal({ text, className }: { text: string; className?: stri
   return (
     <span className={className} aria-label={text}>
       {text.split(" ").map((word, index) => (
-        <span key={`${word}-${index}`} className="mr-[0.22em] inline-block overflow-hidden align-bottom" aria-hidden="true">
+        <span key={`${word}-${index}`} className="mr-[0.22em] -mb-[0.18em] inline-block overflow-hidden pb-[0.18em] align-bottom last:mr-0" aria-hidden="true">
           <motion.span
             className="inline-block"
             initial={reduceMotion ? false : { y: "110%" }}

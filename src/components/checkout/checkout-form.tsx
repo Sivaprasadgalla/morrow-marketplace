@@ -12,6 +12,7 @@ import { FullPageLoader } from "@/components/ui/full-page-loader";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/components/ui/toast";
 import { formatCurrency } from "@/lib/utils";
+import { cartItemKey } from "@/lib/cart";
 
 type RazorpaySuccess = {
   razorpay_order_id: string;
@@ -42,10 +43,10 @@ declare global {
 }
 
 export function CheckoutForm() {
-  const { data: session } = useSession();
+  const { data: session, status } = useSession();
   const router = useRouter();
   const { toast } = useToast();
-  const { items, subtotal, clearCart } = useCart();
+  const { items, subtotal, clearCart, isReady, isSyncing, syncError, notices, retrySync } = useCart();
 
   const [busy, setBusy] = useState(false);
   const [error, setError] = useState("");
@@ -63,6 +64,15 @@ export function CheckoutForm() {
   const handleSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     setError("");
+
+    if (!session) {
+      router.push("/login?callbackUrl=/checkout");
+      return;
+    }
+    if (!isReady || isSyncing || syncError || !items.length) {
+      setError(syncError || "Please wait for your bag to finish syncing before checking out.");
+      return;
+    }
 
     const form = e.currentTarget;
     if (!form.checkValidity()) {
@@ -206,6 +216,14 @@ export function CheckoutForm() {
     }
   };
 
+  if (status === "loading" || (!isReady && !syncError)) {
+    return <div role="status" className="grid min-h-[60vh] place-items-center px-5 text-sm text-stone-500">Preparing your bag...</div>;
+  }
+
+  if (syncError) {
+    return <div className="grid min-h-[60vh] place-items-center px-5 text-center"><div><h1 className="font-serif text-4xl">Your bag needs to sync</h1><p role="alert" className="mt-3 text-sm text-stone-600">{syncError}</p><Button className="mt-6" onClick={retrySync} disabled={isSyncing}>{isSyncing ? "Syncing..." : "Retry syncing your bag"}</Button></div></div>;
+  }
+
   if (!session) {
     return (
       <div className="grid min-h-[60vh] place-items-center px-5 text-center">
@@ -229,6 +247,7 @@ export function CheckoutForm() {
         <div>
           <h1 className="font-serif text-5xl">Your bag is empty</h1>
           <p className="mt-2 text-sm text-stone-500">Add pieces from the collection to proceed.</p>
+          {notices.map((notice) => <p key={notice} className="mt-3 text-xs text-amber-800">{notice}</p>)}
           <Link
             href="/shop"
             className="mt-6 inline-flex h-11 items-center border border-stone-300 px-6 text-sm hover:bg-stone-100"
@@ -284,13 +303,13 @@ export function CheckoutForm() {
             ) : null}
 
             <div className="sm:col-span-2 mt-3">
-              <Button size="lg" type="submit" className="w-full" disabled={busy}>
+              <Button size="lg" type="submit" className="w-full" disabled={busy || isSyncing}>
                 {busy ? (
                   <LoaderCircle className="size-4 animate-spin" />
                 ) : (
                   <LockKeyhole className="size-4" />
                 )}
-                {busy ? "Securing your order…" : `Pay ${formatCurrency(total)}`}
+                {busy ? "Securing your order…" : isSyncing ? "Syncing your bag..." : `Pay ${formatCurrency(total)}`}
               </Button>
               <p className="mt-3 text-center text-[10px] leading-5 text-stone-500">
                 256-bit encrypted checkout. If payment is delayed or window is closed, your order is
@@ -302,9 +321,10 @@ export function CheckoutForm() {
 
         <aside className="self-start border border-stone-200 bg-[#fbf8f2] p-5 lg:sticky lg:top-28">
           <h2 className="font-serif text-3xl">Order summary</h2>
+          {notices.length > 0 && <div role="status" className="mt-4 space-y-2 border border-amber-200 bg-amber-50 p-3 text-xs text-amber-900">{notices.map((notice) => <p key={notice}>{notice}</p>)}</div>}
           <div className="mt-6 space-y-5">
             {items.map((item) => (
-              <div key={item.id} className="grid grid-cols-[64px_1fr_auto] gap-3">
+              <div key={cartItemKey(item)} className="grid grid-cols-[64px_1fr_auto] gap-3">
                 <div className="relative aspect-[4/5] overflow-hidden bg-stone-200">
                   <Image src={item.image} alt="" fill sizes="64px" className="object-cover" />
                 </div>

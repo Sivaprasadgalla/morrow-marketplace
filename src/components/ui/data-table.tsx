@@ -206,12 +206,12 @@ export function DataTable<T>({
   }, [filteredData, startIndex, pageSize]);
 
   return (
-    <div className="overflow-hidden border border-stone-200 bg-[#fcfaf6] shadow-sm">
+    <div className="min-w-0 max-w-full overflow-hidden border border-stone-200 bg-[#fcfaf6] shadow-sm">
       {/* Table Toolbar / Controls */}
-      <div className="flex flex-col gap-3 border-b border-stone-200 p-4 sm:flex-row sm:items-center sm:justify-between">
-        <div className="flex flex-1 flex-wrap items-center gap-3">
+      <div className="flex flex-col gap-3 border-b border-stone-200 p-4 xl:flex-row xl:items-center xl:justify-between">
+        <div className="flex min-w-0 flex-1 flex-wrap items-center gap-3">
           {/* Search Box */}
-          <div className="relative min-w-[220px] max-w-sm flex-1">
+          <div className="relative w-full min-w-0 basis-full sm:max-w-sm sm:flex-1 sm:basis-[220px]">
             <Search className="absolute left-3 top-1/2 size-4 -translate-y-1/2 text-stone-400" />
             <input
               type="text"
@@ -239,11 +239,11 @@ export function DataTable<T>({
           {filters.map((filter) => {
             const val = filterValues[filter.key] ?? "all";
             return (
-              <div key={filter.key} className="flex items-center gap-1.5">
+              <div key={filter.key} className="flex min-w-0 flex-1 items-center gap-1.5 sm:flex-none">
                 <select
                   value={val}
                   onChange={(e) => handleFilterChange(filter.key, e.target.value)}
-                  className="h-10 cursor-pointer border border-stone-300 bg-white px-3 text-xs text-stone-700 outline-none transition hover:border-stone-400 focus:border-stone-500"
+                  className="h-11 w-full min-w-0 cursor-pointer border border-stone-300 bg-white px-3 text-sm text-stone-700 outline-none transition hover:border-stone-400 focus:border-stone-500 sm:h-10 sm:text-xs"
                   aria-label={filter.label}
                 >
                   <option value="all">All {filter.label}</option>
@@ -271,11 +271,45 @@ export function DataTable<T>({
         </div>
 
         {/* Optional Custom Action Buttons (e.g. Export / Add) */}
-        {actions && <div className="flex items-center gap-2">{actions}</div>}
+        {actions && <div className="flex flex-wrap items-center gap-2">{actions}</div>}
+      </div>
+
+      {/* Stacked records keep every field and action readable on phones. */}
+      <div className="md:hidden">
+        <div className="flex flex-wrap items-center gap-2 border-b border-stone-200 p-4">
+          <select
+            aria-label="Sort records"
+            value={sortKey ?? ""}
+            onChange={(event) => { setSortKey(event.target.value || null); setCurrentPage(1); }}
+            className="h-11 min-w-0 flex-1 border border-stone-300 bg-white px-3 text-sm"
+          >
+            <option value="">Default order</option>
+            {columns.filter((col) => col.sortable !== false && (col.accessorKey || col.accessorFn)).map((col) => (
+              <option key={col.id || String(col.accessorKey)} value={col.id || String(col.accessorKey)}>{col.header}</option>
+            ))}
+          </select>
+          <button type="button" disabled={!sortKey} aria-label={sortDir === "asc" ? "Sort descending" : "Sort ascending"} onClick={() => { setSortDir(sortDir === "asc" ? "desc" : "asc"); setCurrentPage(1); }} className="grid size-11 shrink-0 place-items-center border border-stone-300 bg-white disabled:opacity-40">
+            {sortDir === "asc" ? <ArrowUp className="size-4" /> : <ArrowDown className="size-4" />}
+          </button>
+        </div>
+        <div className="divide-y divide-stone-200">
+          {paginatedData.map((row, rowIdx) => (
+            <dl key={rowKey ? rowKey(row, rowIdx) : `mobile-${rowIdx}`} onClick={() => onRowClick?.(row)} className="space-y-3 p-4 text-sm [overflow-wrap:anywhere]">
+              {columns.map((col, colIdx) => {
+                const value = getCellValue(row, col);
+                return <div key={col.id || String(col.accessorKey) || colIdx} className="min-w-0">
+                  <dt className="mb-1 text-[10px] font-semibold tracking-wide text-stone-500 uppercase">{col.header}</dt>
+                  <dd className={`min-w-0 [&_input]:max-w-full [&_select]:max-w-full ${col.className ?? ""}`}>{col.cell ? col.cell({ row, value, index: rowIdx }) : (value as React.ReactNode)}</dd>
+                </div>;
+              })}
+            </dl>
+          ))}
+          {paginatedData.length === 0 && <div className="p-6 text-center text-sm text-stone-500"><p>{emptyMessage}</p>{activeFiltersCount > 0 && <button type="button" onClick={resetAllFilters} className="mt-3 min-h-11 text-[#91412e] underline">Clear search and filters</button>}</div>}
+        </div>
       </div>
 
       {/* Table Element */}
-      <div className="overflow-x-auto">
+      <div className="hidden overflow-x-auto md:block">
         <table className="w-full text-left text-xs">
           <thead className="border-b border-stone-200 bg-stone-50 text-[10px] font-semibold tracking-[.08em] text-stone-500 uppercase">
             <tr>
@@ -365,8 +399,8 @@ export function DataTable<T>({
       </div>
 
       {/* Pagination Footer */}
-      <div className="flex flex-col items-center justify-between gap-3 border-t border-stone-200 px-5 py-3 text-xs text-stone-500 sm:flex-row">
-        <div className="flex items-center gap-4">
+      <div className="flex flex-wrap items-center justify-between gap-3 border-t border-stone-200 px-4 py-3 text-xs text-stone-500 sm:px-5">
+        <div className="flex flex-wrap items-center gap-3">
           <p>
             Showing{" "}
             <span className="font-semibold text-stone-900">

@@ -13,7 +13,7 @@ import { formatCurrency } from "@/lib/utils";
 export function ProductCard({ product, priority = false }: { product: Product; priority?: boolean }) {
   const ref = useRef<HTMLElement>(null);
   const reduceMotion = useReducedMotion();
-  const { addItem } = useCart();
+  const { addItem, isReady } = useCart();
   const pointerX = useMotionValue(0.5);
   const pointerY = useMotionValue(0.5);
   const rotateY = useSpring(useTransform(pointerX, [0, 1], [-2.2, 2.2]), { stiffness: 180, damping: 25 });
@@ -67,6 +67,7 @@ export function ProductCard({ product, priority = false }: { product: Product; p
         </button>
         <button
           type="button"
+          disabled={!isReady || product.stock < 1}
           onClick={() => addItem(product)}
           className="absolute inset-x-3 bottom-3 z-10 flex translate-y-3 items-center justify-center gap-2 bg-[#211f1a] px-4 py-3 text-xs font-medium text-white opacity-0 transition duration-300 group-hover:translate-y-0 group-hover:opacity-100 focus-visible:translate-y-0 focus-visible:opacity-100"
         >

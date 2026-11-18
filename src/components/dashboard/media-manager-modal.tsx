@@ -271,17 +271,17 @@ export function MediaManagerModal({
           animate={{ opacity: 1, scale: 1, y: 0 }}
           exit={{ opacity: 0, scale: 0.96, y: 12 }}
           transition={{ duration: 0.2 }}
-          className="relative z-10 w-full max-w-4xl max-h-[90vh] overflow-hidden rounded-lg bg-[#faf7f2] border border-stone-300 shadow-2xl flex flex-col"
+          className="relative z-10 w-full max-w-4xl max-h-[calc(100dvh-24px)] sm:max-h-[90dvh] overflow-hidden rounded-lg bg-[#faf7f2] border border-stone-300 shadow-2xl flex flex-col"
           onClick={(e) => e.stopPropagation()}
         >
-          <div className="p-6 pb-4 border-b border-stone-200">
+          <div className="shrink-0 p-4 sm:p-6 pb-4 border-b border-stone-200">
             <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-3">
               <div>
                 <h3 className="font-serif text-2xl tracking-tight text-stone-900">
                   {title || (mode === "manage" ? "Media Assets" : "Select Product Media")}
                 </h3>
-                <div className="flex items-center gap-2 mt-1.5 text-xs text-stone-600">
-                  <span className="inline-flex items-center gap-1 font-mono text-[11px] bg-stone-200/80 px-2 py-0.5 rounded text-stone-700">
+                <div className="flex flex-wrap items-center gap-2 mt-1.5 text-xs text-stone-600">
+                  <span className="inline-flex items-center gap-1 max-w-full break-all font-mono text-[11px] bg-stone-200/80 px-2 py-0.5 rounded text-stone-700">
                     <Folder className="size-3 text-stone-500" />
                     {vendorFolder}
                   </span>
@@ -319,7 +319,7 @@ export function MediaManagerModal({
             </div>
 
             {/* Navigation Tabs */}
-            <div className="flex gap-4 mt-4 border-b border-stone-200 -mb-4 pt-1">
+            <div className="flex gap-4 overflow-x-auto whitespace-nowrap [&>button]:shrink-0 mt-4 border-b border-stone-200 -mb-4 pt-1">
               <button
                 type="button"
                 onClick={() => setActiveTab("library")}
@@ -361,9 +361,9 @@ export function MediaManagerModal({
 
         {/* Tab 1: Library */}
         {activeTab === "library" && (
-          <div className="p-6 space-y-4">
+          <div className="min-h-0 overflow-y-auto p-4 sm:p-6 space-y-4">
             <form onSubmit={handleSearchSubmit} className="flex gap-2">
-              <div className="relative flex-1">
+              <div className="relative min-w-0 flex-1">
                 <Search className="absolute left-3 top-1/2 -translate-y-1/2 size-4 text-stone-400" />
                 <Input
                   value={search}
@@ -460,7 +460,7 @@ export function MediaManagerModal({
                         }}
                         disabled={isDeleting}
                         aria-label="Delete media item"
-                        className="absolute top-2 right-2 p-1.5 rounded-full bg-white/90 text-stone-600 opacity-0 group-hover:opacity-100 transition-opacity hover:bg-red-50 hover:text-red-700 shadow-sm"
+                        className="absolute top-2 right-2 p-1.5 rounded-full bg-white/90 text-stone-600 opacity-100 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity hover:bg-red-50 hover:text-red-700 shadow-sm"
                       >
                         {isDeleting ? (
                           <Loader2 className="size-3.5 animate-spin" />
@@ -490,7 +490,7 @@ export function MediaManagerModal({
 
         {/* Tab 2: Upload */}
         {activeTab === "upload" && (
-          <div className="p-6 space-y-5">
+          <div className="min-h-0 overflow-y-auto p-4 sm:p-6 space-y-5">
             <div
               onClick={() => fileInputRef.current?.click()}
               className="border-2 border-dashed border-stone-300 hover:border-[#91412e] bg-white/70 hover:bg-stone-50/80 rounded-lg p-8 text-center cursor-pointer transition-colors"
@@ -566,7 +566,7 @@ export function MediaManagerModal({
 
         {/* Tab 3: Direct URL */}
         {activeTab === "url" && (
-          <form onSubmit={handleAddDirectUrl} className="p-6 space-y-4">
+          <form onSubmit={handleAddDirectUrl} className="min-h-0 overflow-y-auto p-4 sm:p-6 space-y-4">
             <div>
               <label className="block text-xs font-medium text-stone-800 mb-1.5">
                 Image Web URL

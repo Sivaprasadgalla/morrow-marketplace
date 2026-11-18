@@ -149,9 +149,9 @@ export function VendorSettings() {
 
       <div className="grid gap-8 lg:grid-cols-2 items-start">
         {/* Studio & Profile Details */}
-        <div className="border border-stone-200 bg-[#fcfaf6] p-6 sm:p-8">
+        <div className="border border-stone-200 min-w-0 bg-[#fcfaf6] p-4 sm:p-8">
           <div className="flex items-center gap-2.5 pb-5 border-b border-stone-200">
-            <span className="grid size-9 place-items-center rounded-full bg-[#eee4d6] text-[#91412e]">
+            <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#eee4d6] text-[#91412e]">
               <Store className="size-4" />
             </span>
             <div>
@@ -250,9 +250,9 @@ export function VendorSettings() {
         </div>
 
         {/* Change Password & Security */}
-        <div className="border border-stone-200 bg-[#fcfaf6] p-6 sm:p-8">
+        <div className="border border-stone-200 min-w-0 bg-[#fcfaf6] p-4 sm:p-8">
           <div className="flex items-center gap-2.5 pb-5 border-b border-stone-200">
-            <span className="grid size-9 place-items-center rounded-full bg-[#eee4d6] text-[#91412e]">
+            <span className="grid size-9 shrink-0 place-items-center rounded-full bg-[#eee4d6] text-[#91412e]">
               <KeyRound className="size-4" />
             </span>
             <div>

@@ -403,7 +403,7 @@ export function VendorProductManager({ inventoryOnly = false }: { inventoryOnly?
           </p>
         </div>
         {!inventoryOnly ? (
-          <div className="flex items-center gap-2.5">
+          <div className="flex w-full flex-wrap items-center gap-2.5 sm:w-auto">
             <Button
               type="button"
               variant="outline"
@@ -689,7 +689,7 @@ function ProductEditor({
               </label>
               {/* Product Photography & Cloudinary Media Manager */}
               <div className="space-y-4 border border-stone-200 bg-white p-4">
-                <div className="flex items-center justify-between">
+                <div className="flex flex-wrap items-center justify-between gap-3">
                   <div>
                     <h4 className="text-xs font-semibold text-stone-900 uppercase tracking-wider">
                       Product Photography
@@ -725,7 +725,7 @@ function ProductEditor({
                         fill
                         className="object-cover"
                       />
-                      <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-opacity flex items-center justify-center gap-2">
+                      <div className="absolute inset-0 bg-black/40 opacity-100 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity flex flex-wrap items-center justify-center gap-2">
                         <Button
                           type="button"
                           size="sm"
@@ -765,7 +765,7 @@ function ProductEditor({
 
                 {/* Gallery Images Strip */}
                 <div>
-                  <div className="flex items-center justify-between mb-1.5">
+                  <div className="flex flex-wrap items-center justify-between gap-2 mb-1.5">
                     <span className="text-xs font-medium text-stone-700">
                       Product Gallery ({galleryImages.length})
                     </span>
@@ -796,7 +796,7 @@ function ProductEditor({
                             onClick={() =>
                               setGalleryImages((prev) => prev.filter((_, i) => i !== idx))
                             }
-                            className="absolute top-1 right-1 p-1 rounded-full bg-white/90 text-stone-700 hover:text-red-700 opacity-0 group-hover:opacity-100 transition-opacity shadow"
+                            className="absolute top-1 right-1 p-1 rounded-full bg-white/90 text-stone-700 hover:text-red-700 opacity-100 sm:opacity-0 group-hover:opacity-100 group-focus-within:opacity-100 transition-opacity shadow"
                             aria-label="Remove image from gallery"
                           >
                             <X className="size-3" />

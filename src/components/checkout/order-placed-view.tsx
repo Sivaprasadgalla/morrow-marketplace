@@ -282,10 +282,10 @@ export function OrderPlacedView({ orderIdentifier }: { orderIdentifier: string }
         subtext={fullLoaderSubtext}
       />
 
-      <main className="min-h-screen bg-[#f6f1e8] px-5 py-12 sm:px-8 lg:px-16 lg:py-20">
+      <main className="dashboard-content min-h-screen min-w-0 bg-[#f6f1e8] px-4 py-8 sm:px-8 sm:py-12 lg:px-16 lg:py-20">
         <div className="mx-auto max-w-4xl">
           {/* Header Status Banner */}
-          <div className="border border-stone-300 bg-[#fcfaf6] p-6 sm:p-10 shadow-sm">
+          <div className="min-w-0 border border-stone-300 bg-[#fcfaf6] p-4 sm:p-10 shadow-sm">
             <div className="flex flex-col items-center text-center">
               {isPaid ? (
                 <>
@@ -323,7 +323,7 @@ export function OrderPlacedView({ orderIdentifier }: { orderIdentifier: string }
                     <Button
                       size="lg"
                       onClick={handlePayNow}
-                      className="bg-[#211f1a] text-white hover:bg-[#36322b]"
+                      className="h-auto min-h-11 max-w-full whitespace-normal bg-[#211f1a] py-3 text-white hover:bg-[#36322b]"
                     >
                       <LockKeyhole className="size-4" /> Pay {formatCurrency(order.totalPaise / 100)} Now
                     </Button>
@@ -351,7 +351,7 @@ export function OrderPlacedView({ orderIdentifier }: { orderIdentifier: string }
             </div>
 
             {/* Quick Metadata Grid */}
-            <div className="mt-10 grid gap-4 border-t border-stone-200 pt-8 sm:grid-cols-4 text-xs">
+            <div className="mt-8 grid grid-cols-2 gap-4 border-t border-stone-200 pt-6 text-xs sm:mt-10 sm:grid-cols-4 sm:pt-8">
               <div>
                 <p className="text-stone-500 uppercase tracking-wider text-[10px] font-medium">Order number</p>
                 <p className="mt-1 font-semibold text-stone-900">#{order.orderNumber}</p>
@@ -380,13 +380,13 @@ export function OrderPlacedView({ orderIdentifier }: { orderIdentifier: string }
           </div>
 
           {/* Details Columns: Items & Delivery Address */}
-          <div className="mt-8 grid gap-8 lg:grid-cols-[1.5fr_1fr]">
+          <div className="mt-6 grid min-w-0 gap-5 sm:mt-8 sm:gap-8 lg:grid-cols-[minmax(0,1.5fr)_minmax(0,1fr)]">
             {/* Items List */}
-            <section className="border border-stone-300 bg-[#fcfaf6] p-6 shadow-sm">
+            <section className="min-w-0 border border-stone-300 bg-[#fcfaf6] p-4 shadow-sm sm:p-6">
               <h2 className="font-serif text-2xl text-stone-900">Ordered Pieces</h2>
               <div className="mt-6 divide-y divide-stone-200">
                 {order.items.map((item) => (
-                  <div key={item._id} className="flex gap-4 py-4 first:pt-0 last:pb-0">
+                  <div key={item._id} className="grid grid-cols-[64px_minmax(0,1fr)] gap-x-3 gap-y-2 py-4 first:pt-0 last:pb-0 sm:grid-cols-[64px_minmax(0,1fr)_auto] sm:gap-4">
                     <div className="relative size-16 shrink-0 overflow-hidden border border-stone-200 bg-stone-100">
                       {item.image ? (
                         <Image src={item.image} alt={item.productName} fill sizes="64px" className="object-cover" />
@@ -405,7 +405,7 @@ export function OrderPlacedView({ orderIdentifier }: { orderIdentifier: string }
                         {formatCurrency(item.unitPricePaise / 100)} each
                       </p>
                     </div>
-                    <div className="text-right">
+                    <div className="col-start-2 min-w-0 sm:col-start-auto sm:text-right">
                       <p className="font-semibold text-stone-900">
                         {formatCurrency(item.lineTotalPaise / 100)}
                       </p>

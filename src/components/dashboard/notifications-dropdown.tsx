@@ -147,7 +147,7 @@ export function NotificationsDropdown() {
       <AnimatePresence>
         {open && (
           <motion.div
-            className="absolute right-0 top-full z-50 mt-2 w-[380px] overflow-hidden border border-stone-200 bg-[#fbf9f5] shadow-xl"
+            className="fixed inset-x-3 top-[72px] z-50 mt-2 sm:absolute sm:inset-x-auto sm:right-0 sm:top-full sm:w-[380px] overflow-hidden border border-stone-200 bg-[#fbf9f5] shadow-xl"
             initial={{ opacity: 0, y: -8, scale: 0.97 }}
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: -8, scale: 0.97 }}
@@ -169,7 +169,7 @@ export function NotificationsDropdown() {
             </div>
 
             {/* List */}
-            <div className="max-h-[400px] overflow-y-auto">
+            <div className="max-h-[min(400px,calc(100dvh-160px))] overflow-y-auto overscroll-contain">
               {loading && notifications.length === 0 ? (
                 <p className="p-8 text-center text-xs text-stone-500">Loading…</p>
               ) : notifications.length === 0 ? (

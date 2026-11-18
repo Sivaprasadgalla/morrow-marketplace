@@ -31,11 +31,11 @@ export function HomePage({ products }: { products: Product[] }) {
 
   return (
     <div className="overflow-hidden">
-      <section ref={heroRef} className="grid min-h-[760px] border-b border-stone-300 lg:min-h-[calc(100svh-104px)] lg:grid-cols-[37%_63%]">
-        <motion.div style={reduceMotion ? undefined : { y: copyY, opacity }} className="relative z-10 flex min-h-[480px] flex-col justify-between bg-[#8f321f] px-5 py-10 text-[#fff8ee] sm:px-9 sm:py-14 lg:min-h-0 lg:px-12 lg:py-16 xl:px-16">
+      <section ref={heroRef} className="grid border-b border-stone-300 lg:min-h-[calc(100svh-104px)] lg:grid-cols-[minmax(0,37fr)_minmax(0,63fr)]">
+        <motion.div style={reduceMotion ? undefined : { y: copyY, opacity }} className="@container relative z-10 flex min-h-[420px] min-w-0 flex-col justify-between bg-[#8f321f] px-5 py-8 text-[#fff8ee] sm:min-h-[480px] sm:px-9 sm:py-14 lg:min-h-0 lg:px-12 lg:py-16 xl:px-16">
           <div className="flex items-center justify-between text-[10px] font-medium tracking-[0.15em] text-white/65 uppercase"><span>The slow home edit</span><span>Vol. 04</span></div>
-          <div className="py-14 lg:py-6">
-            <h1 className="max-w-[680px] font-serif text-[clamp(4rem,7.6vw,8.6rem)] leading-[0.83] tracking-[-0.065em]">
+          <div className="py-10 sm:py-14 lg:py-6">
+            <h1 className="max-w-[680px] font-serif text-[clamp(3rem,15cqi,4.5rem)] leading-[1.02] tracking-[-0.055em] text-balance lg:text-[clamp(3rem,24cqi,8rem)]">
               <TextReveal text="Objects worth keeping." />
             </h1>
             <motion.p className="mt-8 max-w-md text-sm leading-6 text-white/75 sm:text-base" initial={reduceMotion ? false : { opacity: 0, y: 14 }} animate={reduceMotion ? undefined : { opacity: 1, y: 0 }} transition={{ delay: 0.7, duration: 0.7 }}>
@@ -48,7 +48,7 @@ export function HomePage({ products }: { products: Product[] }) {
           <div className="flex items-end justify-between text-[10px] tracking-[0.12em] text-white/55 uppercase"><span>Independent Indian studios</span><ArrowDown className="size-4 animate-bounce" /></div>
         </motion.div>
 
-        <div className="relative min-h-[520px] overflow-hidden bg-stone-300 lg:min-h-0">
+        <div className="relative min-h-[320px] overflow-hidden bg-stone-300 sm:min-h-[440px] lg:min-h-0">
           <motion.div className="absolute inset-[-8%_0]" style={reduceMotion ? undefined : { y: imageY }}>
             <Image src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=2000&q=90" alt="Warm contemporary living room with handcrafted furniture" fill priority sizes="(max-width: 1024px) 100vw, 63vw" className="object-cover" />
           </motion.div>

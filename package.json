@@ -8,7 +8,8 @@
     "start": "next start",
     "seed": "node scripts/seed.mjs",
     "lint": "eslint .",
-    "typecheck": "tsc --noEmit"
+    "typecheck": "tsc --noEmit",
+    "test:cart": "node scripts/cart-check.mjs"
   },
   "dependencies": {
     "@auth/mongodb-adapter": "latest",
